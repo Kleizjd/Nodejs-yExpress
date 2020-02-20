@@ -1,12 +1,13 @@
-const expess = require('express');
+const express = require('express');
 
 const usersController = require('../../controllers/controllersv1/users-controller');
 
-const router = expess.Router();
+const router = express.Router();
 
+router.post('/login', usersController.login); 
 router.post('/create', usersController.createUser);
 router.post('/update', usersController.updateUser);
 router.post('/delete', usersController.deleteUser);
-router.post('/get-all', usersController.getUsers);
+router.get('/get-all', usersController.getUsers);
 
 module.exports = router;
