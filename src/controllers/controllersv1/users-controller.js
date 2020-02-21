@@ -1,18 +1,26 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Users = require('../../mongo/models/users');
 
+const expiresIn = 60 * 60;
 const login = async (req, resp) => {
   try {
     const { email, password } = req.body;
     const user = await Users.findOne({ email });
 
     if (user) {
+      const token = jwt.sign(
+        { userId: user._id, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn }
+      );
       const isOK = await bcrypt.compare(password, user.password);
-      if(isOK){
-        resp.send({ status: 'OK', data: {} });
-
+      if (isOK) {
+        resp.send({ status: 'OK', data: { token, expiresIn } });
       } else {
-        resp.status(403).send({ status: 'USER OR PASSWORD INVALID', message: '' });
+        resp
+          .status(403)
+          .send({ status: 'USER OR PASSWORD INVALID', message: '' });
       }
     } else {
       resp.status(401).send({ status: 'USER NOT FOUND', message: '' });
@@ -21,6 +29,7 @@ const login = async (req, resp) => {
     resp.status(500).send({ status: 'Error', message: error.message });
   }
 };
+
 const createUser = async (request, response) => {
   try {
     const { username, email, password, data } = request.body;
@@ -54,12 +63,16 @@ const createUser = async (request, response) => {
 
 const updateUser = async (request, response) => {
   try {
+    // console.log('req.sessionData', req.sessionData.userId); 
+
     const { username, email, password, data, userId } = request.body;
+
     await Users.findByIdAndUpdate(userId, {
       username,
       email,
       data
     });
+
     response.send({ status: 'OK', message: 'user update' });
   } catch (error) {
     if (error.code && error.code === 1100) {
@@ -87,5 +100,5 @@ module.exports = {
   deleteUser,
   getUsers,
   updateUser,
-  login,
+  login
 };
