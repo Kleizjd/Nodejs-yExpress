@@ -1,0 +1,42 @@
+NPM | Para instalar un modulo 
+---------------------------
+npm init 
+npm install countries-list
+---------------------------------------------------------------------------
+git init
+git remote add origin https://github.com/Kleizjd/Nodejs-yExpress.git
+git checkout -b intro
+git add .
+git config --global user.email "jjdd1997@hotmail.com"
+git config --global user.name "Jose Daniel Grijalba Osorio"
+git commit -m "init"
+git push origin intro
+
+git config --get remote.origin.url
+---FRAMEWORK
+npm install express mongoose --save
+---------------------------------------------------------------------------
+npm install -D nodemon
+
+npm install eslint --save-dev
+
+./node_modules/.bin/eslint --init
+------SI la terminal del visual studio code no permite hacer:
+---- EJECUTAR POWER SHELL COMO ADMINISTRADOR y despues correr este comando: Set-ExecutionPolicy RemoteSigned 
+./node_modules/.bin/eslint --init
+---------------------------------------
+seleccionar--- To check syntax, find problems, and enforce code style,
+		 CommonJS (require/exports),
+		None of these, No
+tecla espacio para desmarcar browser y selecciono Node , ya que estamos usando javascript del lado del servidor
+
+---quitar errores
+If you are using vscode i would recommend you to click the option at the 
+bottom-right of the window and set it to LF from CRLF..this fixed my errors
+
+npm install body-parser
+
+npm install jsonwebtoken morgan cors
+
+npm i bcrypt
+npm run dev    
